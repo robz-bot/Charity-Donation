@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>Kind Heart Charity - Donation</title>
+
+    <!-- CSS FILES -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+
+    <link href="css/bootstrap-icons.css" rel="stylesheet" />
+
+    <link href="css/templatemo-kind-heart-charity.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg bg-light shadow-lg">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">
+          <img src="images/logo.png" class="logo img-fluid" alt="" />
+          <span>
+            Kind Heart Charity
+            <small>Non-profit Organization</small>
+          </span>
+        </a>
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link click-scroll" href="index.html#section_1"
+                >Home</a
+              >
+            </li>
+            <li class="nav-item ms-3">
+              <a
+                class="nav-link custom-btn custom-border-btn btn"
+                href="donate.html"
+                >Donate</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <section class="donate-section">
+        <div class="section-overlay"></div>
+        <div class="container">
+          <div class="row">
+            <div
+              class="custom-form bg-light p-5 rounded-4 col-lg-8 col-12 mx-auto mt-0"
+            >
+              <div class="filter-options">
+                <p>Filter by frequency, amount and payment method:</p>
+                <div class="d-flex align-items-center justify-content-center">
+                  <select
+                    id="filterFrequency"
+                    class="form-select my-2 form-select-sm"
+                  >
+                    <option value="all">All Frequency</option>
+                    <option value="Monthly">Monthly</option>
+                    <option value="One-time">One-time</option>
+                  </select>
+
+                  <select
+                    id="filterAmount"
+                    class="my-2 form-select form-select-sm"
+                  >
+                    <option value="0">All Amount</option>
+                    <option value="100">Greater than ₹100</option>
+                    <option value="200">Greater than ₹200</option>
+                    <option value="300">Greater than ₹300</option>
+                    <option value="400">Greater than ₹400</option>
+                  </select>
+
+                  <select
+                    id="filterMethod"
+                    class="my-2 form-select form-select-sm"
+                  >
+                    <option value="all">All Payment Method</option>
+                    <option value="CARD">Debit or Credit card</option>
+                    <option value="UPI">UPI</option>
+                  </select>
+                </div>
+                <div class="d-flex align-items-center justify-content-center">
+                  <button
+                    type="button"
+                    class="btn-center btn-sm btn btn-primary"
+                    onclick="filterDonations()"
+                  >
+                    Apply
+                  </button>
+                  <button
+                    type="button"
+                    class="mx-2 btn-center btn-sm btn btn-warning"
+                    onclick=" resetDonations()"
+                  >
+                    Reset
+                  </button>
+                </div>
+              </div>
+
+              <div id="donationRecords">
+                <!-- Display donation records in table format here -->
+                <div id="totalAmountDisplay" class="mb-3 text-end"></div>
+
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Frequency</th>
+                      <th>Amount</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Payment Method</th>
+                    </tr>
+                  </thead>
+                  <tbody id="donationRecordsBody">
+                    <!-- Donation records will be inserted here dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="site-footer-bottom">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-6 col-md-7 col-12">
+              <p class="copyright-text mb-0">
+                Copyright © 2024 <a href="#">Kind Heart</a> Charity Org.
+              </p>
+            </div>
+
+            <div
+              class="col-lg-6 col-md-5 col-12 d-flex justify-content-center align-items-center mx-auto"
+            >
+              <ul class="social-icon">
+                <li class="social-icon-item">
+                  <a href="#" class="social-icon-link bi-twitter"></a>
+                </li>
+
+                <li class="social-icon-item">
+                  <a href="#" class="social-icon-link bi-facebook"></a>
+                </li>
+
+                <li class="social-icon-item">
+                  <a href="#" class="social-icon-link bi-instagram"></a>
+                </li>
+
+                <li class="social-icon-item">
+                  <a href="#" class="social-icon-link bi-linkedin"></a>
+                </li>
+
+                <li class="social-icon-item">
+                  <a
+                    href="https://youtube.com/templatemo"
+                    class="social-icon-link bi-youtube"
+                  ></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- JAVASCRIPT FILES -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.sticky.js"></script>
+    <script src="js/counter.js"></script>
+    <script src="js/custom.js"></script>
+    <script>
+      // Function to fetch and display donations in table format
+      async function fetchDonations(
+        filterFrequency,
+        filterAmount,
+        filterMethod
+      ) {
+        try {
+          const response = await fetch("http://localhost:5000/get_donations");
+          const data = await response.json();
+
+          if (data.success) {
+            const donations = data.donations;
+            const donationRecordsBody = document.getElementById(
+              "donationRecordsBody"
+            );
+            const totalAmountDisplay =
+              document.getElementById("totalAmountDisplay");
+
+            donationRecordsBody.innerHTML = "";
+            let totalAmount = 0;
+            console.log({ donations });
+
+            donations.forEach((donation) => {
+              // Check if the donation matches the selected frequency and amount
+              const amountCondition =
+                filterAmount === "0" ||
+                parseInt(donation.DonationAmount) > parseInt(filterAmount);
+              if (
+                (filterFrequency === "all" ||
+                  filterFrequency === donation.DonationFrequency) &&
+                (filterMethod === "all" ||
+                  filterMethod === donation.PaymentMethod) &&
+                amountCondition
+              ) {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                            <td>${donation.DonationFrequency}</td>
+                            <td>${donation.DonationAmount}</td>
+                            <td>${donation.DonorName}</td>
+                            <td>${donation.DonorEmail}</td>
+                            <td>${donation.PaymentMethod}</td>
+                        `;
+                donationRecordsBody.appendChild(row);
+                totalAmount += parseInt(donation.DonationAmount);
+              }
+            });
+            totalAmountDisplay.innerHTML = `<strong class="badge bg-success">Total Amount: ₹${totalAmount}</strong>`;
+          } else {
+            // Handle error
+            console.error(data.message);
+          }
+        } catch (error) {
+          console.error(`An error occurred: ${error}`);
+        }
+      }
+
+      // Function to filter donations
+      function filterDonations() {
+        const filterFrequency =
+          document.getElementById("filterFrequency").value;
+        const filterAmount = document.getElementById("filterAmount").value;
+        const filterMethod = document.getElementById("filterMethod").value;
+
+        // Call the fetchDonations function with the selected frequency for filtering
+        // fetchDonations(filterFrequency);
+        fetchDonations(filterFrequency, filterAmount, filterMethod);
+      }
+
+      function resetDonations() {
+        document.getElementById("filterFrequency").value = "all";
+        document.getElementById("filterAmount").value = "0";
+        document.getElementById("filterMethod").value = "all";
+        fetchDonations("all", "0", "all");
+      }
+
+      // Fetch donations when the page loads without filtering
+      fetchDonations("all", "0", "all");
+    </script>
+  </body>
+</html>

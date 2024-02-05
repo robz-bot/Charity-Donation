@@ -1,13 +1,14 @@
 from flask import Flask, render_template, request, jsonify
-
+from flask_cors import CORS  
 app = Flask(__name__)
-
+CORS(app)  
 # Sample storage for donations (replace with a database in a real-world scenario)
 donations = []
 
 @app.route('/submit_donation', methods=['POST'])
 def submit_donation():
     try:
+        print(request.form)
         # Retrieve form data
         donation_frequency = request.form.get('DonationFrequency')
         donation_amount = request.form.get('flexRadioDefault')
@@ -32,6 +33,15 @@ def submit_donation():
 
         # Return success message
         return jsonify({"success": True, "message": "Thank you for your donation!"})
+
+    except Exception as e:
+        return jsonify({"success": False, "message": f"An error occurred: {str(e)}"})
+
+@app.route('/get_donations', methods=['GET'])
+def get_donations():
+    try:
+        # Retrieve all donation records
+        return jsonify({"success": True, "donations": donations})
 
     except Exception as e:
         return jsonify({"success": False, "message": f"An error occurred: {str(e)}"})
