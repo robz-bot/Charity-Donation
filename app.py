@@ -3,7 +3,13 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)  
 # Sample storage for donations (replace with a database in a real-world scenario)
-donations = []
+donations = [{
+    'DonationFrequency':'One-time', 
+    'DonationAmount': '1000', 
+    'DonorName':'Mary', 
+    'DonorEmail': 'mary@mail.com',
+    'PaymentMethod': 'UPI'
+}]
 
 @app.route('/submit_donation', methods=['POST'])
 def submit_donation():
