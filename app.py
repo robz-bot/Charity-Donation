@@ -2,14 +2,79 @@ from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS  
 app = Flask(__name__)
 CORS(app)  
-# Sample storage for donations (replace with a database in a real-world scenario)
-donations = [{
-    'DonationFrequency':'One-time', 
-    'DonationAmount': '1000', 
-    'DonorName':'Mary', 
-    'DonorEmail': 'mary@mail.com',
-    'PaymentMethod': 'UPI'
-}]
+# Sample dataset
+donations = [
+    {
+        'DonationFrequency': 'One-time',
+        'DonationAmount': '1000',
+        'DonorName': 'Alice',
+        'DonorEmail': 'alice@example.com',
+        'PaymentMethod': 'CARD'
+    },
+    {
+        'DonationFrequency': 'Monthly',
+        'DonationAmount': '500',
+        'DonorName': 'Bob',
+        'DonorEmail': 'bob@example.com',
+        'PaymentMethod': 'UPI'
+    },
+    {
+        'DonationFrequency': 'One-time',
+        'DonationAmount': '2000',
+        'DonorName': 'Charlie',
+        'DonorEmail': 'charlie@example.com',
+        'PaymentMethod': 'CARD'
+    },
+    {
+        'DonationFrequency': 'Monthly',
+        'DonationAmount': '7500',
+        'DonorName': 'David',
+        'DonorEmail': 'david@example.com',
+        'PaymentMethod': 'UPI'
+    },
+    {
+        'DonationFrequency': 'One-time',
+        'DonationAmount': '3000',
+        'DonorName': 'Eve',
+        'DonorEmail': 'eve@example.com',
+        'PaymentMethod': 'CARD'
+    },
+    {
+        'DonationFrequency': 'Monthly',
+        'DonationAmount': '1000',
+        'DonorName': 'Frank',
+        'DonorEmail': 'frank@example.com',
+        'PaymentMethod': 'UPI'
+    },
+    {
+        'DonationFrequency': 'One-time',
+        'DonationAmount': '4000',
+        'DonorName': 'Grace',
+        'DonorEmail': 'grace@example.com',
+        'PaymentMethod': 'CARD'
+    },
+    {
+        'DonationFrequency': 'Monthly',
+        'DonationAmount': '1250',
+        'DonorName': 'Henry',
+        'DonorEmail': 'henry@example.com',
+        'PaymentMethod': 'UPI'
+    },
+    {
+        'DonationFrequency': 'One-time',
+        'DonationAmount': '5000',
+        'DonorName': 'Ivy',
+        'DonorEmail': 'ivy@example.com',
+        'PaymentMethod': 'CARD'
+    },
+    {
+        'DonationFrequency': 'Monthly',
+        'DonationAmount': '1500',
+        'DonorName': 'Jack',
+        'DonorEmail': 'jack@example.com',
+        'PaymentMethod': 'UPI'
+    }
+]
 
 @app.route('/submit_donation', methods=['POST'])
 def submit_donation():
