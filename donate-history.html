@@ -131,6 +131,7 @@
                       <th>Name</th>
                       <th>Email</th>
                       <th>Payment Method</th>
+                      <th>CARD/UPI</th>
                     </tr>
                   </thead>
                   <tbody id="donationRecordsBody">
@@ -229,12 +230,19 @@
                 amountCondition
               ) {
                 const row = document.createElement("tr");
+                let paymentInfo;
+                if (donation.PaymentMethod === "CARD") {
+                  paymentInfo = donation.cardNumber;
+                } else {
+                  paymentInfo = donation.upi;
+                }
                 row.innerHTML = `
                             <td>${donation.DonationFrequency}</td>
                             <td>${donation.DonationAmount}</td>
                             <td>${donation.DonorName}</td>
                             <td>${donation.DonorEmail}</td>
                             <td>${donation.PaymentMethod}</td>
+                            <td>${paymentInfo}</td>
                         `;
                 donationRecordsBody.appendChild(row);
                 totalAmount += parseInt(donation.DonationAmount);

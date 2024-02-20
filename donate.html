@@ -286,6 +286,7 @@
                         value="CARD"
                         name="DonationPayment"
                         id="flexRadioDefault9"
+                        onclick="togglePaymentFields('CARD')"
                       />
                       <label class="form-check-label" for="flexRadioDefault9">
                         <i class="bi-credit-card custom-icon ms-1"></i>
@@ -300,21 +301,66 @@
                         value="UPI"
                         name="DonationPayment"
                         id="flexRadioDefault10"
+                        onclick="togglePaymentFields('UPI')"
                       />
                       <label class="form-check-label" for="flexRadioDefault10">
                         <i class="bi-paypal custom-icon ms-1"></i>
                         UPI
                       </label>
                     </div>
-
-                    <button
-                      type="button"
-                      class="custom-btn custom-border-btn btn"
-                      onclick="submitDonation(event)"
-                    >
-                      Submit Donation
-                    </button>
                   </div>
+                  <div class="col-lg-12">
+                    <!-- Additional fields for capturing card details -->
+                    <div id="cardFields" class="row" style="display: none">
+                      <div class="col-lg-12 col-12 mt-2">
+                        <input
+                          type="number"
+                          name="cardNumber"
+                          id="cardNumber"
+                          class="form-control"
+                          placeholder="Card Number"
+                          maxlength="12"
+                          required
+                          oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                        />
+                      </div>
+                      <div class="col-lg-12 col-12 mt-2">
+                        <input
+                          type="text"
+                          name="cvv"
+                          id="cvv"
+                          class="form-control"
+                          placeholder="CVV"
+                          required
+                          maxlength="3"
+                          oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <!-- Additional field for capturing UPI -->
+                    <div id="upiField" class="row" style="display: none">
+                      <div class="col-lg-12 col-12 mt-2">
+                        <input
+                          type="email"
+                          name="upi"
+                          id="upi"
+                          class="form-control"
+                          placeholder="Enter UPI ID"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    class="custom-btn custom-border-btn btn my-2"
+                    onclick="submitDonation(event)"
+                  >
+                    Submit Donation
+                  </button>
                 </div>
               </form>
             </div>
@@ -373,11 +419,35 @@
     <script src="js/counter.js"></script>
     <script src="js/custom.js"></script>
     <script>
+      var payMethod = "";
+      function togglePaymentFields(paymentMethod) {
+        payMethod = paymentMethod;
+        if (paymentMethod === "CARD") {
+          document.getElementById("cardFields").style.display = "block";
+          document.getElementById("upiField").style.display = "none";
+        } else if (paymentMethod === "UPI") {
+          document.getElementById("cardFields").style.display = "none";
+          document.getElementById("upiField").style.display = "block";
+        }
+      }
+
       function submitDonation(event) {
         const donationForm = document.getElementById("donationForm");
-        console.log({donationForm})
         const formData = new FormData(donationForm);
-        console.log({formData})
+        console.log({ formData });
+        if (payMethod === "CARD") {
+          const cardNumber = formData.get("cardNumber");
+          const cvv = formData.get("cvv");
+          // You can now handle the card details as needed
+          console.log("Card Number:", cardNumber);
+          console.log("CVV:", cvv);
+        } else if (payMethod === "UPI") {
+          const upi = formData.get("upi");
+          // You can now handle the UPI details as needed
+          console.log("UPI:", upi);
+        }
+        console.log({ donationForm });
+        
         event.preventDefault();
 
         fetch("http://localhost:5000/submit_donation", {
@@ -389,7 +459,7 @@
             if (data.success) {
               alert(data.message);
               // Optionally, redirect the user to a thank you page
-              // window.location.href = '/thank_you';
+              window.location.href = '/donate-history.html';
             } else {
               alert(data.message);
             }
